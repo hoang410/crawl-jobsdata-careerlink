@@ -99,3 +99,10 @@ df_jobs['Update_time']=update_times
 df_jobs['Update_time']=pd.to_datetime(df_jobs['Update_time'],format='%Y-%m-%d %H:%M:%S')
 df_jobs['Key']=df_jobs['Jobs_title']+'#'+df_jobs['Company']
 ```
+###  - So sánh data mới crawl và data cũ từ database và cập nhật data phát sinh mới.
+```
+# Compare 2 data frame, append new data
+df_jobs_new=df_jobs[~(df_jobs['Key'].isin(df_jobs_sql['Key']) & df_jobs['Update_time'].isin(df_jobs_sql['Update_time']))]
+df_jobs_sql=pd.concat([df_jobs_sql,df_jobs_new],axis=0)
+df_jobs_sql=df_jobs_sql.drop_duplicates(subset=['Key','Update_time']).reset_index(drop=True)
+```
