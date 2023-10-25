@@ -87,3 +87,15 @@ for number in range(1,total_page+1):
         time_n=datetime.fromtimestamp(int(times.get('data-datetime').replace('\n','').strip()))
         update_times.append(datetime.strftime(time_n,'%Y-%m-%d %H:%M:%S'))
 ```
+####    + Gán các list vừa rồi vào các cột trong dataframe tương ứng. Trong đó cột 'Key' được tạo từ cột 'Jobs_title' và 'Company' để làm key kết nối với các bảng khác nhau.
+```
+# Save jobs information into jobs dataframe
+df_jobs['Jobs_title']=jobs_title
+df_jobs['Company']=job_companies
+df_jobs['City']=job_cities
+df_jobs['Salary']=job_salaries
+df_jobs['Position']=jobs_position
+df_jobs['Update_time']=update_times
+df_jobs['Update_time']=pd.to_datetime(df_jobs['Update_time'],format='%Y-%m-%d %H:%M:%S')
+df_jobs['Key']=df_jobs['Jobs_title']+'#'+df_jobs['Company']
+```
