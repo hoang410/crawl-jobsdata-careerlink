@@ -58,7 +58,7 @@ print(total_page)
 df_jobs = pd.DataFrame(columns=['Jobs_title','Company','City','Salary','Position','Update_time','Key'])
 jobs_title, job_companies, job_cities, job_salaries, update_times, jobs_position = [], [], [], [], [], []
  ```
-####    + Chúng ta sẽ duyệt qua lần lượt cho từng trang để lấy các nội dung trong trang, xác định các thẻ chưa nội dung cần lấy để trích xuất ra và thêm vào list trống đã tạo bên trên. Các list tương ứng là 'jobs_title': Tiêu đề công việc, 'job_companies': Tên công ty, 'job_salaries': Mức thu nhập
+####    + Chúng ta sẽ duyệt qua lần lượt cho từng trang để lấy các nội dung trong trang, xác định các thẻ chưa nội dung cần lấy để trích xuất ra và thêm vào list trống đã tạo bên trên. Các list tương ứng là 'jobs_title': Tiêu đề công việc, 'job_companies': Tên công ty, 'job_salaries': Mức thu nhập,'jobs_position': Vị trí, 'update_times': Thời gian đăng bài. Sau khi xác định được các thẻ, lấy nội dung cần thiết thì sẽ thêm vào các list rỗng.
 
 ```
 reponse.status_code == 200:
@@ -75,6 +75,7 @@ reponse.status_code == 200:
     salaries_tag=soup.find_all('span',class_='job-salary text-primary d-flex align-items-center')
     positions_tag=soup.find_all('a',class_='job-position text-secondary d-none d-lg-block')
     update_time_tag = soup.find_all('span',class_='cl-datetime')
+    # Import to empty list
     for jobs,companies,cities,salaries,positions,times in zip(jobs_title_tag,companies_tag,cities_tag,salaries_tag,positions_tag,update_time_tag):
         jobs_title.append(jobs.get('title').replace('\n','').strip())
         job_companies.append(companies.text.replace('\n','').strip())
