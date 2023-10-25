@@ -10,7 +10,7 @@ Sơ lược qua nội dung có thể tóm tắt như sau: mình sẽ crawl toàn
 Cơ bản là khá đơn giản! Bắt đầu vào việc thôi!
 
 ## 1. Crawl tất cả các tin tuyển dụng từ trang tìm kiếm:
- - Đầu tiên, import các thư viện cần thiết
+###  - Đầu tiên, import các thư viện cần thiết
   
 ```
 from bs4 import BeautifulSoup
