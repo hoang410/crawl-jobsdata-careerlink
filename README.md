@@ -106,3 +106,9 @@ df_jobs_new=df_jobs[~(df_jobs['Key'].isin(df_jobs_sql['Key']) & df_jobs['Update_
 df_jobs_sql=pd.concat([df_jobs_sql,df_jobs_new],axis=0)
 df_jobs_sql=df_jobs_sql.drop_duplicates(subset=['Key','Update_time']).reset_index(drop=True)
 ```
+###  - Lưu data vào lại database
+```
+# Save table in mySQL
+df_jobs_sql.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
+print('Jobs_data: ',df_jobs_sql.shape)
+```
