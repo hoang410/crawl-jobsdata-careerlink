@@ -56,10 +56,5 @@ print(total_page)
  ```
 # Create jobs dataframe, empty list
 df_jobs = pd.DataFrame(columns=['Jobs_title','Company','City','Salary','Position','Update_time','Key'])
-jobs_title = []
-job_companies = []
-job_cities = []
-job_salaries = []
-update_times = []
-jobs_position = []
+jobs_title, job_companies, job_cities, job_salaries, update_times, jobs_position = [], [], [], [], [], []
  ```
