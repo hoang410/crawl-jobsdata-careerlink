@@ -19,10 +19,10 @@ from datetime import datetime
 import pandas as pd
 from sqlalchemy import create_engine
 ```
- - Tạo sẵn database 'Careerlink_data' và bảng 'jobs_data' như bên dưới
+ ### - Tạo sẵn database 'Careerlink_data' và bảng 'jobs_data' như bên dưới. Về nội dung các cột trong 'jobs_data' sẽ giải thích rõ hơn ở nội dung code.
    ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/8ba5d0aa-5bbf-46ae-9412-eec4a97b0b17) 
    ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/827207b4-d5e4-4420-bd01-9fbbf66123b5)
- - Kết nối với CSDL mySQL vừa tạo
+ ### - Kết nối với CSDL mySQL vừa tạo
 ```
 # Connect mySQL
 db_user = 'root'
@@ -33,4 +33,10 @@ db_name = 'Careerlink_data'
 table_name = 'jobs_data'
 connection_str = f'mysql+mysqlconnector://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
 engine = create_engine(connection_str)
+```
+ ###  - Lấy data từ mySQL
+```
+# Load dataframe from mySQL
+sql_query_jobs_data = 'SELECT * FROM jobs_data'
+df_jobs_sql = pd.read_sql_query(sql_query_jobs_data,engine)
 ```
