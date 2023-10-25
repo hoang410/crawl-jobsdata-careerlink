@@ -51,3 +51,15 @@ pages_total = soup_count.find_all('a',class_='page-link')
 total_page = int(pages_total[4].text)
 print(total_page)
 ```
+ ###  - Phần này sẽ tạo dataframe để lưu dữ liệu
+ #### + Trước hết sẽ tạo 1 dataframe rỗng, tạo các list rỗng để lưu trữ nội dung sau khi crawl
+ ```
+# Create jobs dataframe, empty list
+df_jobs = pd.DataFrame(columns=['Jobs_title','Company','City','Salary','Position','Update_time','Key'])
+jobs_title = []
+job_companies = []
+job_cities = []
+job_salaries = []
+update_times = []
+jobs_position = []
+ ```
