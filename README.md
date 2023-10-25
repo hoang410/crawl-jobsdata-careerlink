@@ -40,3 +40,14 @@ engine = create_engine(connection_str)
 sql_query_jobs_data = 'SELECT * FROM jobs_data'
 df_jobs_sql = pd.read_sql_query(sql_query_jobs_data,engine)
 ```
+ ###  - Đếm tổng số trang của link các công việc để scan hết các tin tuyển dụng.
+```
+# Counting total page
+url_page1 = 'https://www.careerlink.vn/vieclam/list'
+reponse_count = requests.get(url_page1)
+html_count = reponse_count.text
+soup_count = BeautifulSoup(html_count,'lxml')
+pages_total = soup_count.find_all('a',class_='page-link')
+total_page = int(pages_total[4].text)
+print(total_page)
+```
