@@ -20,7 +20,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 ```
  - Tạo sẵn database 'Careerlink_data' và bảng 'jobs_data' như bên dưới
-   ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/8ba5d0aa-5bbf-46ae-9412-eec4a97b0b17)
+   ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/8ba5d0aa-5bbf-46ae-9412-eec4a97b0b17) 
    ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/827207b4-d5e4-4420-bd01-9fbbf66123b5)
  - Kết nối với CSDL mySQL vừa tạo
 ```
