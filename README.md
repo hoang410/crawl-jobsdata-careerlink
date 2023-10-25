@@ -52,9 +52,35 @@ total_page = int(pages_total[4].text)
 print(total_page)
 ```
  ###  - Phần này sẽ tạo dataframe để lưu dữ liệu
- #### + Trước hết sẽ tạo 1 dataframe rỗng, tạo các list rỗng để lưu trữ nội dung sau khi crawl
+ ####   + Trước hết sẽ tạo 1 dataframe rỗng, tạo các list rỗng để lưu trữ nội dung sau khi crawl
  ```
 # Create jobs dataframe, empty list
 df_jobs = pd.DataFrame(columns=['Jobs_title','Company','City','Salary','Position','Update_time','Key'])
 jobs_title, job_companies, job_cities, job_salaries, update_times, jobs_position = [], [], [], [], [], []
  ```
+####    + Chúng ta sẽ duyệt qua lần lượt cho từng trang để lấy các nội dung trong trang, xác định các thẻ chưa nội dung cần lấy để trích xuất ra và thêm vào list trống đã tạo bên trên. Các list tương ứng là 'jobs_title': Tiêu đề công việc, 'job_companies': Tên công ty, 'job_salaries': Mức thu nhập
+
+```
+reponse.status_code == 200:
+        print(f'Successfully to request page {number}')
+    else:
+        print(f'Error to request page {number}')
+        pass
+    html=reponse.text
+    soup=BeautifulSoup(html,'lxml')
+    # Defind tag contain information
+    jobs_title_tag=soup.find_all('a',class_='job-link clickable-outside')
+    companies_tag=soup.find_all('a',class_='text-dark job-company mb-1 d-inline-block line-clamp-1')
+    cities_tag=soup.find_all('a',class_='text-reset')
+    salaries_tag=soup.find_all('span',class_='job-salary text-primary d-flex align-items-center')
+    positions_tag=soup.find_all('a',class_='job-position text-secondary d-none d-lg-block')
+    update_time_tag = soup.find_all('span',class_='cl-datetime')
+    for jobs,companies,cities,salaries,positions,times in zip(jobs_title_tag,companies_tag,cities_tag,salaries_tag,positions_tag,update_time_tag):
+        jobs_title.append(jobs.get('title').replace('\n','').strip())
+        job_companies.append(companies.text.replace('\n','').strip())
+        job_cities.append(cities.text.replace('\n','').strip())
+        job_salaries.append(salaries.text.replace('\n','').strip())
+        jobs_position.append(positions.text.replace('\n','').strip())
+        time_n=datetime.fromtimestamp(int(times.get('data-datetime').replace('\n','').strip()))
+        update_times.append(datetime.strftime(time_n,'%Y-%m-%d %H:%M:%S'))
+```
