@@ -19,7 +19,7 @@ from datetime import datetime
 import pandas as pd
 from sqlalchemy import create_engine
 ```
- ### - Tạo sẵn database 'Careerlink_data' và bảng 'jobs_data' như bên dưới. Về nội dung các cột trong 'jobs_data' sẽ giải thích rõ hơn ở nội dung code.
+ ### - Tạo sẵn database 'Careerlink_data' và bảng 'jobs_data' như bên dưới. Về nội dung các cột trong 'jobs_data' sẽ giải thích rõ hơn ở các phần tiếp theo.
    ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/8ba5d0aa-5bbf-46ae-9412-eec4a97b0b17) 
    ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/827207b4-d5e4-4420-bd01-9fbbf66123b5)
  ### - Kết nối với CSDL mySQL vừa tạo
@@ -111,4 +111,32 @@ df_jobs_sql=df_jobs_sql.drop_duplicates(subset=['Key','Update_time']).reset_inde
 # Save table in mySQL
 df_jobs_sql.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
 print('Jobs_data: ',df_jobs_sql.shape)
+```
+## 2. Crawl các thông tin liên quan như phân loại nhóm công việc, kinh nghiệm, học vấn, loại công việc:
+Mình crawl thêm phần này để thuận tiện cho việc phân tich theo dõi cho từng nhóm phân loại.
+###  - Vẫn là import các thư viện, thiết lập kết nối với database, load dataframe cũ ra để xử lý:
+```
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from bs4 import BeautifulSoup
+from lxml import html
+import pandas as pd
+import time
+import requests
+from sqlalchemy import create_engine
+
+# Connect mySQL
+db_user='root'
+db_password='Hoang410'
+db_host='127.0.0.1'
+db_port=3306
+db_name='careerlink_data'
+table_name='experiences'
+connection_str=f'mysql+mysqlconnector://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
+engine=create_engine(connection_str)
+
+# Load data frame from mySQL
+sql_query_experiences='SELECT * FROM experiences'
+df_exp_sql=pd.read_sql_query(sql_query_experiences,engine)
 ```
