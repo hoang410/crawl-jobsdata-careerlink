@@ -114,7 +114,7 @@ print('Jobs_data: ',df_jobs_sql.shape)
 ```
 ## 2. Crawl các thông tin liên quan như phân loại nhóm công việc, kinh nghiệm, học vấn, loại công việc:
 Mình crawl thêm phần này để thuận tiện cho việc phân tich theo dõi cho từng nhóm phân loại.
-###  - Vẫn là import các thư viện, thiết lập kết nối với database, load dataframe cũ ra để xử lý:
+###  - Vẫn là import các thư viện, thiết lập kết nối với database, load dataframe cũ ra để xử lý. Table sẽ có 2 cột gồm cột Experience và Key (để kết nối với Table Jobs_data vừa tạo bên trên).
 ```
 from selenium import webdriver
 from selenium.webdriver.common.by import By
