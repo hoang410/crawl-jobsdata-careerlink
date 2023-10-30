@@ -229,8 +229,10 @@ print('Experiences:',df_exp_sql.shape)
 ### Triển khai crawl song song các file.
 ### Thiết lập mối quan hệ giữa các bảng thông qua cột Key.
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/2eeccce8-8fad-4c2a-92b5-038a3c4cb88a)
+
 ## 3. Cuối cùng load dữ liệu qua Power BI và tạo dashboard:
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/cbc6976b-e501-46b8-9907-f99a6d2e5fa5)
+
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/bef54f11-77a7-4fe2-875e-b96c3805dec0)
 
 Nhập UserID và Password. Load các tables cần thiết cho thống kê phân tích
@@ -239,7 +241,8 @@ Nhập UserID và Password. Load các tables cần thiết cho thống kê phân
 
 Tạo các dashboard cơ bản:
 
-![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/8dec9aa9-7c82-4e20-94a1-d951794ec90a)
+![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/35cfa662-9e5d-4cf5-b89a-f10b005b528d)
+
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/2055ff41-00bc-47e9-ab6f-dae40b6cf81a)
 
 
