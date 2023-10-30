@@ -114,6 +114,7 @@ print('Jobs_data: ',df_jobs_sql.shape)
 ```
 ## 2. Crawl các thông tin liên quan như phân loại nhóm công việc, kinh nghiệm, học vấn, loại công việc:
 Mình crawl thêm phần này để thuận tiện cho việc phân tich theo dõi cho từng nhóm phân loại.
+Phần này mình sẽ xử lý với phân loại theo kinh nghiệm.
 ###  - Vẫn là import các thư viện, thiết lập kết nối với database, load dataframe cũ ra để xử lý. Table sẽ có 2 cột gồm cột Experience và Key (để kết nối với Table Jobs_data vừa tạo bên trên).
 ```
 from selenium import webdriver
@@ -139,4 +140,33 @@ engine=create_engine(connection_str)
 # Load data frame from mySQL
 sql_query_experiences='SELECT * FROM experiences'
 df_exp_sql=pd.read_sql_query(sql_query_experiences,engine)
+```
+###  - Phần này sẽ lấy các thông tin về phân loại theo kinh nghiệm làm việc, lưu vào 1 list
+```
+driver = webdriver.Chrome()
+url='https://www.careerlink.vn/vieclam/list'
+driver.get(url)
+time.sleep(5)
+experiences=driver.find_element(By.XPATH,'/html/body/div[3]/div/div/div/div[1]/div/div[3]')
+experiences.click()
+experiences_list=[]
+html=driver.page_source
+soup=BeautifulSoup(html,'lxml')
+result=soup.find_all('button',class_='dropdown-item cl-select--item')
+for ex_grade in result:
+    experiences_list.append(ex_grade.text)
+```
+###  - Tiếp theo sẽ lưu lại các đường link theo từng phân loại để phục vụ cho việc thu thập thông tin công việc phân chia theo kinh nghiệm
+```
+experiences_link=[]
+for time_click in range(0,len(experiences_list)):
+    select=time_click+1
+    experience_click_open=driver.find_element(By.XPATH,f'/html/body/div[3]/div/div/div/div[1]/div/div[3]/div/button[{select}]')
+    driver.execute_script("arguments[0].click();", experience_click_open)
+    time.sleep(2)
+    experience_link=driver.current_url.replace('tim-kiem-viec-lam','list')
+    experiences_link.append(experience_link)
+    driver.find_element(By.XPATH,'/html/body/div[3]/div/div/div/div[1]/div/div[3]/div/div/button').click()
+    time.sleep(2)
+driver.close()
 ```
