@@ -1,7 +1,7 @@
 # crawl-jobsdata-careerlink
 # CÀO DỮ LIỆU VIỆC LÀM TỪ CAREERLINK, LƯU TRỮ VÀO MYSQL, LIÊN KẾT POWER BI
 
-Xin chào mọi người!
+Xin chào!
 
 Nhân dịp vừa học xong các khoá về DE, DA, DS nên mình tự build 1 project nho nhỏ về các kỹ năng mình đã học được từ các khoá học vừa rồi.
 
@@ -170,3 +170,61 @@ for time_click in range(0,len(experiences_list)):
     time.sleep(2)
 driver.close()
 ```
+###   - Viết 1 function đếm số trang để duyệt qua các trang và lấy thông tin việc làm
+```
+def total_page(url):
+    response=requests.get(url)
+    html=response.text
+    soup_count_page=BeautifulSoup(html,'lxml')
+    pagination=soup_count_page.find_all('ul',class_='pagination')
+    if pagination==[]:
+        total_page=1
+    else:
+        for i in pagination:
+            check_page=i.find('a',class_='page-link d-none d-md-block')
+            total_page=int(check_page.parent.find_previous_sibling().text.strip())
+    return(total_page)
+```
+###   - Phần này tạo bảng Experience với cột Key bằng 2 cột Company và Jobs_title ghép lại, cũng tương tự như cột Key ở mục bên trên, các cột Key này sẽ có mối quan hệ với nhau
+```
+# Create Experience table
+experiences_dict={}
+exp_jobs_list=[]
+exp_companies=[]
+for experience_link in experiences_link:
+    exp_job_list=[]
+    for page in range(1,total_page(experience_link+'&page=1')+1):#total_page(experience_link+'&page=1')
+        url_experiences=f'{experience_link}&page={page}'
+        response_exp=requests.get(url_experiences)
+        html_exp=response_exp.text
+        soup_exp=BeautifulSoup(html_exp,'lxml')
+        exp_job_tag=soup_exp.find_all('a',class_='job-link clickable-outside')
+        exp_company_tag=soup_exp.find_all('a',class_='text-dark job-company mb-1 d-inline-block line-clamp-1')
+        for job,com in zip(exp_job_tag,exp_company_tag):
+            jobs_title=job.get('title').replace('\n','').strip()
+            company=com.text.replace('\n','').strip()
+            exp_job_list.append(jobs_title)
+            exp_companies.append(company)
+    exp_jobs_list.append(exp_job_list)
+for exp, job in zip(experiences_list,exp_jobs_list):
+    experiences_dict[exp]=job
+df_exp=pd.DataFrame([(value,key) for key, values in experiences_dict.items() for value in values],columns=['Jobs_title','Experience'])
+df_exp['Company']=exp_companies
+df_exp=df_exp.drop_duplicates(subset=['Jobs_title','Company'])
+df_exp['Key']=df_exp['Jobs_title']+'#'+df_exp['Company']
+df_exp=df_exp[['Experience','Key']]
+```
+###  - Cuối cùng so sánh 2 dataframe, thêm các mục mới vào dữ liệu và lưu lại
+```
+# Compare 2 dataframe
+df_new_exp=df_exp[~df_exp['Key'].isin(df_exp_sql['Key'])]
+df_exp_sql=pd.concat([df_exp_sql,df_new_exp],axis=0)
+df_exp_sql=df_exp_sql.drop_duplicates(subset=['Key'])
+
+# Save to mySQL
+df_exp_sql.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
+print('Experiences:',df_exp_sql.shape)
+```
+### Các nội dung phân loại khác, cách làm cũng tương tự, file mẫu theo như đính kèm.
+### Triển khai crawl song song các file.
+### Thiết lập mối quan hệ giữa các bảng thông qua cột Key
