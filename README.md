@@ -232,9 +232,13 @@ print('Experiences:',df_exp_sql.shape)
 ## 3. Cuối cùng load dữ liệu qua Power BI và tạo dashboard:
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/cbc6976b-e501-46b8-9907-f99a6d2e5fa5)
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/bef54f11-77a7-4fe2-875e-b96c3805dec0)
+
 Nhập UserID và Password. Load các tables cần thiết cho thống kê phân tích
+
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/b5a1813f-f06a-46f2-9177-008c815f37cb)
+
 Tạo các dashboard cơ bản:
+
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/8dec9aa9-7c82-4e20-94a1-d951794ec90a)
 ![image](https://github.com/hoang410/crawl-jobsdata-careerlink/assets/119757225/2055ff41-00bc-47e9-ab6f-dae40b6cf81a)
 
